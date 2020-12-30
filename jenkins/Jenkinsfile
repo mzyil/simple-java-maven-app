@@ -23,7 +23,7 @@ spec:
     - name: dind
       image: docker:18.09-dind
       command:
-        - dockerd
+        - dockerd-entrypoint.sh
       securityContext:
         privileged: true
       volumeMounts:
