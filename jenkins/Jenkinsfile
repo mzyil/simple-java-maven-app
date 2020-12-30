@@ -33,7 +33,6 @@ spec:
     - name: dind-storage
       emptyDir: {}
 """
-            }
         }
     }
     stages {
