@@ -1,43 +1,8 @@
 pipeline {
     agent {
         kubernetes {
-            label 'maven'
+            label 'jenkins-docker-maven-agent'
             yaml """
-spec:
-  containers:
-  - name: maven
-    image: maven:3-alpine
-    command:
-        - cat
-    tty: true
-"""
-        }
-    }
-    stages {
-        stage('Build') {
-            steps {
-                container("maven") {
-                    sh 'mvn -B -DskipTests clean package'
-                }
-            }
-        }
-        stage('Test') {
-            steps {
-                container("maven") {
-                    sh 'mvn test'
-                }
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-        stage('Deliver') {
-            agent {
-                kubernetes {
-                    label 'dind'
-                    yaml """
 apiVersion: v1
 kind: Pod
 metadata:
@@ -49,11 +14,16 @@ spec:
   containers:
     - name: jenkins-docker-maven-agent
       image: docker.tartismaliyiz.com/jenkins-docker-maven-agent:0.1
+      command:
+        - cat
+      tty: true
       env:
         - name: DOCKER_HOST
           value: tcp://localhost:2375
     - name: dind
-      image: docker:18.05-dind
+      image: docker:latest
+      command:
+        - dockerd
       securityContext:
         privileged: true
       volumeMounts:
@@ -63,8 +33,30 @@ spec:
     - name: dind-storage
       emptyDir: {}
 """
+            }
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                container("jenkins-docker-maven-agent") {
+                    sh 'mvn -B -DskipTests clean package'
                 }
             }
+        }
+        stage('Test') {
+            steps {
+                container("jenkins-docker-maven-agent") {
+                    sh 'mvn test'
+                }
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Deliver') {
             steps {
                 container ("jenkins-docker-maven-agent") {
                     sh './jenkins/scripts/deliver.sh'
