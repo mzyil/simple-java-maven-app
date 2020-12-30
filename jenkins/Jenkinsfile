@@ -34,11 +34,10 @@ spec:
             }
         }
         stage('Deliver') {
-            steps {
-                agent {
-                    kubernetes {
-                        label 'dind'
-                        yaml """
+            agent {
+                kubernetes {
+                    label 'dind'
+                    yaml """
 apiVersion: v1
 kind: Pod
 metadata:
@@ -48,7 +47,7 @@ metadata:
     component: agent
 spec:
   containers:
-    - name: 
+    - name: jenkins-docker-maven-agent
       image: docker.tartismaliyiz.com/jenkins-docker-maven-agent:0.1
       env:
         - name: DOCKER_HOST
@@ -64,9 +63,10 @@ spec:
     - name: dind-storage
       emptyDir: {}
 """
-                    }
                 }
-                container ("dind") {
+            }
+            steps {
+                container ("jenkins-docker-maven-agent") {
                     sh './jenkins/scripts/deliver.sh'
                 }
             }
