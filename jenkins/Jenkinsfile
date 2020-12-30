@@ -22,8 +22,6 @@ spec:
           value: tcp://localhost:2375
     - name: dind
       image: docker:latest
-      command:
-        - dockerd
       securityContext:
         privileged: true
       volumeMounts:
