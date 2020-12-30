@@ -33,5 +33,6 @@ USERNAME="mzyil"
 
 IMAGE_TAG="$REPO/$NAME:$VERSION-$GIT_COMMIT_SHA"
 docker build -t $IMAGE_TAG .
-echo $PASSWORD | docker login --username $USERNAME --pasword-stdin $REPO
+echo $PASSWORD | docker login --username $USERNAME --password-stdin $REPO
+sleep 9999
 docker push $IMAGE_TAG
