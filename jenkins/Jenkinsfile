@@ -35,9 +35,7 @@ spec:
         }
         stage('Deliver') {
             steps {
-                container("maven") {
-                    sh './jenkins/scripts/deliver.sh'
-                }
+                sh './jenkins/scripts/deliver.sh'
             }
         }
     }
