@@ -24,4 +24,14 @@ set +x
 echo 'The following command runs and outputs the execution of your Java'
 echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 set -x
-java -jar target/${NAME}-${VERSION}.jar
+# java -jar target/${NAME}-${VERSION}.jar
+GIT_COMMIT_SHA=$(git rev-parse --short HEAD)
+JAR_FILE_PATH=$PWD/target/$NAME-$VERSION.jar
+PASSWORD="Mzyil."
+REPO="docker.tartismaliyiz.com"
+USERNAME="mzyil"
+
+IMAGE_TAG="$REPO/$NAME:$VERSION-$GIT_COMMIT_SHA"
+docker build -t $IMAGE_TAG .
+echo $PASSWORD | docker login --username $USERNAME --pasword-stdin $REPO
+docker push $IMAGE_TAG
