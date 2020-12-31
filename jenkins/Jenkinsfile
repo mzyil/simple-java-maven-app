@@ -65,11 +65,11 @@ spec:
                 }
             }
         }
-        stage('Deliver') {
-            steps {
-                container ("jenkins-docker-maven-agent") {
-                    sh './jenkins/scripts/deliver.sh'
-                }
+    }
+    post {
+        success {
+            container ("jenkins-docker-maven-agent") {
+                sh './jenkins/scripts/deliver.sh'
             }
         }
     }
