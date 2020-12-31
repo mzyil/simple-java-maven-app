@@ -1,0 +1,7 @@
+namespaceOverride: nexus
+nexusProxy:
+  env:
+    nexusDockerHost: nexus.tartismaliyiz.com
+    nexusHttpHost: nexus.tartismaliyiz.com
+persistence:
+  storageClass: nexus-pv

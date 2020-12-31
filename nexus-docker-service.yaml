@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sonatype-nexus
+  name: nexus-docker
+  namespace: nexus
+spec:
+  ports:
+  - name: nexus-docker
+    port: 5003
+    protocol: TCP
+    targetPort: 5003
+  selector:
+    app: sonatype-nexus
+    release: nexus
+  type: NodePort
