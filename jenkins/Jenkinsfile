@@ -20,6 +20,16 @@ spec:
       env:
         - name: DOCKER_HOST
           value: tcp://localhost:2375
+        - name: DOCKER_REPO_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: docker-repo-credentials
+                key: password
+        - name: DOCKER_REPO_USER
+            valueFrom:
+              secretKeyRef:
+                name: docker-repo-credentials
+                key: username
     - name: dind
       image: docker:18.09-dind
       command:
