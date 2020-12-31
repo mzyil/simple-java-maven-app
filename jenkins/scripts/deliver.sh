@@ -14,4 +14,4 @@ IMAGE_TAG="$REPO/$NAME:$VERSION-$GIT_COMMIT_SHA"
 docker build -t $IMAGE_TAG --build-arg JAR_FILE_NAME=$JAR_FILE_NAME .
 echo $DOCKER_REPO_PASSWORD | docker login --username $DOCKER_REPO_USERNAME --password-stdin $REPO
 docker push $IMAGE_TAG
-helm install --set image.repository="$REPO/$NAME" --set image.tag="$VERSION-$GIT_COMMIT_SHA" ./helm/sample-java-app
+helm install --set image.repository="$REPO/$NAME" --set image.tag="$VERSION-$GIT_COMMIT_SHA" $NAME ./helm/sample-java-app
