@@ -25,7 +25,7 @@ spec:
             secretKeyRef:
               name: docker-repo-credentials
               key: password
-        - name: DOCKER_REPO_USER
+        - name: DOCKER_REPO_USERNAME
           valueFrom:
             secretKeyRef:
               name: docker-repo-credentials
