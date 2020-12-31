@@ -30,6 +30,10 @@ spec:
             secretKeyRef:
               name: docker-repo-credentials
               key: username
+      volumeMounts:
+        - name: maven-cache
+          mountPath: /home/jenkins/.m2
+          readOnly: false
     - name: dind
       image: docker:18.09-dind
       command:
@@ -41,6 +45,8 @@ spec:
           mountPath: /var/lib/docker
   volumes:
     - name: dind-storage
+      emptyDir: {}
+    - name: maven-cache
       emptyDir: {}
 """
         }
