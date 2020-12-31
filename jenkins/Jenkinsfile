@@ -47,7 +47,8 @@ spec:
     - name: dind-storage
       emptyDir: {}
     - name: maven-cache
-      emptyDir: {}
+        persistentVolumeClaim:
+          claimName: maven-cache
 """
         }
     }
