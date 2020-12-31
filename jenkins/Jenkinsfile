@@ -13,7 +13,7 @@ metadata:
 spec:
   containers:
     - name: jenkins-docker-maven-agent
-      image: docker.tartismaliyiz.com/jenkins-docker-maven-agent:0.1
+      image: docker.tartismaliyiz.com/jenkins-docker-maven-agent:0.2
       command:
         - cat
       tty: true
