@@ -8,6 +8,7 @@ VERSION=`mvn help:evaluate -Dexpression=project.version | grep "^[^\[]"`
 GIT_COMMIT_SHA=$(git rev-parse --short HEAD)
 JAR_FILE_NAME="$NAME-$VERSION.jar"
 JAR_FILE_PATH="$PWD/target/$JAR_FILE_NAME"
+
 REPO="docker.tartismaliyiz.com"
 
 IMAGE_TAG="$REPO/$NAME:$VERSION-$GIT_COMMIT_SHA"
